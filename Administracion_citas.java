@@ -94,7 +94,7 @@ public class Administracion_citas {
                             //Si existe el doctor rompe ciclo
 
                              if (!mapConDoctores.containsKey(nombreDocCita)){
-                                 System.out.println("\nError! ID existente del doctor");
+                                 System.out.println("\nError! ID no existente del doctor");
 
                                 }
                              else {
@@ -103,8 +103,18 @@ public class Administracion_citas {
                              }
                         }  // Cierra for
 
-                        System.out.println("\nIntroduzca el ID del paciente:");
-                        nombrePacCita = teclado.nextLine();
+                            for (;;){
+                                System.out.println("\nIntroduzca el ID del paciente:");
+                                nombrePacCita = teclado.nextLine();
+
+                                if (!mapConPacientes.containsKey(nombrePacCita)){
+                                    System.out.println("\nError! ID no existente del paciente");
+                                }
+                                else {
+                                    System.out.println("\nSelecciono el Paciente:"+mapConPacientes.get(nombrePacCita).nombrePaciente+"\n " );
+                                    break;
+                                }
+                            }
 
                         Cita objCita = new Cita();
                         objCita.fecha = fechaCita;
