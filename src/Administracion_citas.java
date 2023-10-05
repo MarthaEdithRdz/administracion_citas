@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Scanner;
 //Martha Rdz
 public class Administracion_citas {
@@ -10,6 +11,14 @@ public class Administracion_citas {
         HashMap<String, Doctor> mapConDoctores = new HashMap<String, Doctor>();
         HashMap<String, Cita> mapConCitas = new HashMap<String, Cita>();
         Scanner teclado = new Scanner(System.in);
+
+        //Licencias de autorización
+        String usuario = "Martha";
+        String contrasenia = "0000";
+
+        //Variables para validar el usuario y contraseña
+        String usingre = "";
+        String contraingre = "";
 
         //Carga de los archivos a leer
         loadDoctores(mapConDoctores);
@@ -29,107 +38,131 @@ public class Administracion_citas {
         do {
             try{
 
-                //Carga de datos de los archivos
-                System.out.println("Selecciona la opción que deseas realizar");
-                System.out.println("1.Alta de doctores");
-                System.out.println("2.Consulta doctores");
-                System.out.println("3.Alta pacientes");
-                System.out.println("4.Consulta pacientes");
-                System.out.println("5.Alta citas");
-                System.out.println("6.Consulta citas");
-                System.out.println("7.Salir");
-                op = teclado.nextLine();
+                //Validar contraseña
+                System.out.println("****Bienvenido****");
+                System.out.println("Ingresa Usuario");
+                usingre = teclado.nextLine();
+                System.out.println("Ingresa Contraseña");
+                contraingre = teclado.nextLine();
 
-                switch (op) {
-                    case "1":
-                        System.out.println("\n*** Agregar Nuevo Doctor a la agenda");
-                        System.out.println("\nIntroduzca el ID del doctor:");
-                        idDoc = teclado.nextLine();
-                        System.out.println("\nIntroduzca el nombre del doctor:");
-                        nombreDoc = teclado.nextLine();
-                        System.out.println("\nIntroduzca la especialidad del doctor:");
-                        especialidadDoc = teclado.nextLine();
+                if (Objects.equals(usingre, usuario) && Objects.equals(contraingre, contrasenia)){
+                    int i = 0;
+                    do{
+                        //Carga de datos de los archivos
+                        System.out.println("Selecciona la opción que deseas realizar");
+                        System.out.println("1.Alta de doctores");
+                        System.out.println("2.Consulta doctores");
+                        System.out.println("3.Alta pacientes");
+                        System.out.println("4.Consulta pacientes");
+                        System.out.println("5.Alta citas");
+                        System.out.println("6.Consulta citas");
+                        System.out.println("7.Salir");
+                        op = teclado.nextLine();
 
-                        Doctor objDoctor = new Doctor();
-                        objDoctor.nombreDoctor = nombreDoc;
-                        objDoctor.especialidadDoctor = especialidadDoc;
-                        createDoctores(mapConDoctores,idDoc,objDoctor);
-                        saveDoctor(mapConDoctores);
-                        break;
+                        switch (op) {
+                            case "1":
+                                System.out.println("\n*** Agregar Nuevo Doctor a la agenda");
+                                System.out.println("\nIntroduzca el ID del doctor:");
+                                idDoc = teclado.nextLine();
+                                System.out.println("\nIntroduzca el nombre del doctor:");
+                                nombreDoc = teclado.nextLine();
+                                System.out.println("\nIntroduzca la especialidad del doctor:");
+                                especialidadDoc = teclado.nextLine();
 
-                    case "2":
-                        listDoctor(mapConDoctores);
-                        break;
-                    case "3":
-                        System.out.println("\n*** Agregar Nuevo Paciente a la agenda");
-                        System.out.println("\nIntroduzca el ID del paciente:");
-                        idPac = teclado.nextLine();
-                        System.out.println("\nIntroduzca el nombre del paciente:");
-                        nombrePac = teclado.nextLine();
+                                Doctor objDoctor = new Doctor();
+                                objDoctor.nombreDoctor = nombreDoc;
+                                objDoctor.especialidadDoctor = especialidadDoc;
+                                createDoctores(mapConDoctores,idDoc,objDoctor);
+                                saveDoctor(mapConDoctores);
+                                break;
 
-                        Paciente objPaciente = new Paciente();
-                        objPaciente.nombrePaciente = nombrePac;
+                            case "2":
+                                listDoctor(mapConDoctores);
+                                break;
+                            case "3":
+                                System.out.println("\n*** Agregar Nuevo Paciente a la agenda");
+                                System.out.println("\nIntroduzca el ID del paciente:");
+                                idPac = teclado.nextLine();
+                                System.out.println("\nIntroduzca el nombre del paciente:");
+                                nombrePac = teclado.nextLine();
 
-                        createPaciente(mapConPacientes,idPac,objPaciente);
-                        savePaciente(mapConPacientes);
-                        break;
+                                Paciente objPaciente = new Paciente();
+                                objPaciente.nombrePaciente = nombrePac;
 
-                    case "4":
-                        listPaciente(mapConPacientes);
-                        break;
+                                createPaciente(mapConPacientes,idPac,objPaciente);
+                                savePaciente(mapConPacientes);
+                                break;
 
-                    case "5":
-                        System.out.println("\n*** Agregar Nueva Cita a la agenda");
-                        System.out.println("\nIntroduzca el ID de la cita:");
-                        idCita = teclado.nextLine();
-                        System.out.println("\nIntroduzca la fecha de la cita:");
-                        fechaCita = teclado.nextLine();
-                        System.out.println("\nIntroduzca el motivo de la cita:");
-                        motivoCita = teclado.nextLine();
+                            case "4":
+                                listPaciente(mapConPacientes);
+                                break;
 
-                        for(;;) {
-                            System.out.println("\nIntroduzca el ID del Doctor");
-                            nombreDocCita = teclado.nextLine();
+                            case "5":
+                                System.out.println("\n*** Agregar Nueva Cita a la agenda");
+                                System.out.println("\nIntroduzca el ID de la cita:");
+                                idCita = teclado.nextLine();
+                                System.out.println("\nIntroduzca la fecha de la cita:");
+                                fechaCita = teclado.nextLine();
+                                System.out.println("\nIntroduzca el motivo de la cita:");
+                                motivoCita = teclado.nextLine();
 
-                            //Si existe el doctor rompe ciclo
+                                for(;;) {
+                                    System.out.println("\nIntroduzca el ID del Doctor");
+                                    nombreDocCita = teclado.nextLine();
 
-                             if (!mapConDoctores.containsKey(nombreDocCita)){
-                                 System.out.println("\nError! ID existente del doctor");
+                                    //Si existe el doctor rompe ciclo
 
+                                    if (!mapConDoctores.containsKey(nombreDocCita)){
+                                        System.out.println("\nError! ID no existente del doctor");
+
+                                    }
+                                    else {
+                                        System.out.println("\nSelecciono el doctor:"+mapConDoctores.get(nombreDocCita).nombreDoctor+"\n " );
+                                        break;
+                                    }
+                                }  // Cierra for
+
+                                for (;;){
+                                    System.out.println("\nIntroduzca el ID del paciente:");
+                                    nombrePacCita = teclado.nextLine();
+
+                                    if (!mapConPacientes.containsKey(nombrePacCita)){
+                                        System.out.println("\nError! ID no existente del paciente");
+                                    }
+                                    else {
+                                        System.out.println("\nSelecciono el Paciente:"+mapConPacientes.get(nombrePacCita).nombrePaciente+"\n " );
+                                        break;
+                                    }
                                 }
-                             else {
-                                 System.out.println("\nSelecciono el doctor:"+mapConDoctores.get(nombreDocCita).nombreDoctor+"\n " );
-                                 break;
-                             }
-                        }  // Cierra for
 
-                        System.out.println("\nIntroduzca el ID del paciente:");
-                        nombrePacCita = teclado.nextLine();
+                                Cita objCita = new Cita();
+                                objCita.fecha = fechaCita;
+                                objCita.motivo = motivoCita;
+                                objCita.doctorCita = nombreDocCita;
+                                objCita.pacienteCita = nombrePacCita;
 
-                        Cita objCita = new Cita();
-                        objCita.fecha = fechaCita;
-                        objCita.motivo = motivoCita;
-                        objCita.doctorCita = nombreDocCita;
-                        objCita.pacienteCita = nombrePacCita;
+                                createCita(mapConCitas,idCita,objCita);
+                                saveCita(mapConCitas);
+                                break;
 
-                        createCita(mapConCitas,idCita,objCita);
-                        saveCita(mapConCitas);
-                        break;
+                            case "6":
+                                listCita(mapConCitas);
+                                break;
 
-                    case "6":
-                        listCita(mapConCitas);
-                        break;
-
-                    case "7":
-                        System.out.println("Gracias por usar nuestra agenda");
-                        System.exit(0);
-                        break;
+                            case "7":
+                                System.out.println("Gracias por usar nuestra agenda");
+                                System.exit(0);
+                                i=1;
+                                break;
+                        }//Fin Switch
+                    }while (i==0);
+                } else {
+                    System.out.println("Lo siento, Contraseña o Usuario no aprobado");
                 }
             } catch (Exception e){
                 System.out.println("Error");
                 break;
             }
-
         }while (ban==0);
 
     }
